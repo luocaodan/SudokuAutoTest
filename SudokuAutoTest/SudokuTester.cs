@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SudokuAutoTest
 {
@@ -28,9 +27,9 @@ namespace SudokuAutoTest
             {
                 WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = false,
-                WorkingDirectory = Path.Combine(baseDir, NumberId)
+                WorkingDirectory = baseDir
             };
-            _logFile = Path.Combine(Program.LogDir, $"{numberId}-log.txt");
+            _logFile = Path.Combine(baseDir, $"{numberId}-{Guid.NewGuid().ToString("N")}-log.txt");
         }
 
         public string ExecuteWrongTest(string arguments, int timeLimit)
