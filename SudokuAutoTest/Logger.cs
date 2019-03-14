@@ -10,8 +10,13 @@ namespace SudokuAutoTest
 {
     public static class Logger
     {
+        public static bool hasError = false;
+
         public static void Error(string message, string app)
         {
+            if (!hasError) {
+                hasError = true;
+            }
             WriteEntry(message, "ERROR", app);
         }
 

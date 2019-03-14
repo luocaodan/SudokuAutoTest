@@ -33,12 +33,16 @@ namespace SudokuAutoTest
                             break;
                     }
                 }
+                checkNumber();
                 TestProject();
+                if (Logger.hasError) {
+                    return 1;
+                }
             }
             catch (Exception e)
             {
                 Hint();
-                Console.Read();
+                return 1;
             }
         }
 
@@ -48,7 +52,7 @@ namespace SudokuAutoTest
                               "\t-limit [max limit second] -number [number id]\n\n" +
                               "\t- 本功能用于给学生的作业进行评分,并记录每份作业在不同测试数据下耗费的时间。最终生成的评分文件为 Scores.txt, 可直接复制到Excel中使用。\n\n" +
                               "\t- 数字 [limit second] 指定效率测试运行的最大时长, 默认为 600秒。\n\n" +
-                              "\t- 学号 [number id] (可选参数)提供单个学号, 当本参数存在时，将只测试单个同学的工程，并将结果存储至 学号-score.txt中。\n\n" +
+                              "\t- 学号 [number id] (必须参数)提供单个学号, 当本参数存在时，将只测试单个同学的工程，并将结果存储至 学号-score.txt中。\n\n" +
                               "使用时将本程序复制到学生代码仓库中使用");
         }
 
@@ -93,6 +97,19 @@ namespace SudokuAutoTest
                     Logger.Error(e.Message, tester._logFile);
                 }
 
+            }
+        }
+
+        private static void checkNumber() {
+            if (Number == "") {
+                throw new Exception('no student id');
+            }
+
+            char[] ca = Number.toCharArray();
+            for (int i = 0;i < ca.length;i++) {
+                if (ch[i] < '0' || ch[i] > '9') {
+                    throw new Exception('student id format error');
+                }
             }
         }
     }
